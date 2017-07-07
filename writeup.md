@@ -70,7 +70,7 @@ Please refer to `Include an exploratory visualization of the dataset` section of
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because it was suggested by the ConvNet paper. But that does not actually increase the accuracy of my model.
+As a first step, I decided to convert the images to grayscale because it was suggested by the ConvNet paper. 
 
 As a last step, I normalized the image data because it helps to construct a model with good numeric stability.
 
@@ -102,14 +102,14 @@ My final model consisted of the following layers:
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used `epochs = 50, batch_size = 128, learning_rate = 0.001`, the weights are generated using `tf.truncated_normal` with `mu = 0, sigma = 0.02`. I introduced l2 regularization in the model, with `beta = 0.02`, in addition, I used 70% dropout in the training. Just as LeNet model, the AdamOptimizer was used to minimize the reduced mean of the softmax cross entropy with logis.
+To train the model, I used `epochs = 50, batch_size = 32, learning_rate = 0.001`, the weights are generated using `tf.truncated_normal` with `mu = 0, sigma = 0.1`. I introduced l2 regularization in the model, with `beta = 0.02`, in addition, I used 70% dropout in the training. Just as LeNet model, the AdamOptimizer was used to minimize the reduced mean of the softmax cross entropy with logis.
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
 
-* training set accuracy of 98.6%
-* validation set accuracy of 94.9%
+* training set accuracy of 99.7%
+* validation set accuracy of 97.6%
 * test set accuracy of 94.8%
 
 If an iterative approach was chosen:
@@ -123,15 +123,14 @@ If an iterative approach was chosen:
 	* I achieved 91% accuracy with validation data set by adjusting the parameters to `sigma=0.01, batch_siz=32, conv3_depth=60, conv4_depth=42, conv1_filter_length=7, pool2_k=3`. All the adjustments point to use less parameters, which means LeNet model is overfitting.
 	
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-	* To fix the overfiting problem, I first tried l2 regularization, and l2 regularzation + dropout, repeat my strategies to the new models. With only l2 regularization, I could reach 93% accuracy with the validation dataset; with both both l2 regularization and dropout, I could reach almost 95% accuracy. The optmized parameters are very similar between the two, both prefer more parameters at layer 3 and layer 4; besides beta for the regularization, where only l2 prefers a smaller beta 0.007, where l2 with dropout perfer a larger beta 0.02. Of note, I could not reach goog results with 50% dropout rate with this model, so I chose 30% dropout rate
-(70$ keep rate). To use higher dropout rate, I need to increase the model size by adding more layers.
+	* To fix the overfiting problem, I first tried l2 regularization, and l2 regularzation + dropout, repeat my strategies to the new models. With only l2 regularization, I could reach 93% accuracy with the validation dataset; with both both l2 regularization and dropout, I could reach almost 95% accuracy. The optmized parameters are very similar between the two, both prefer more parameters at layer 3 and layer 4; besides beta for the regularization, where only l2 prefers a smaller beta 0.0005, where l2 with dropout perfer a larger beta 0.001. Of note, I could not reach good results with 50% dropout rate with this model, so I chose 30% dropout rate (70% keep probability). To use higher dropout rate, I think I will need to increase the model size by adding more layers.
 
 * Which parameters were tuned? How were they adjusted and why?
-	* The final model with both l2 regularization and ropout adjust the following parameters to `train_dropout=0.7, epochs=50,, beta=0.02, sigma=0.1, batch_siz=32, conv1_output_depth=18, conv3_depth=360,conv4_depth=336` (the rest parameters are the same as LeNet model). We can see the model prefers more parameters in the depth of each layer. Higher depth is likely needed for capture keep information for various labels.
+	* The final model with both l2 regularization and ropout adjust the following parameters to `keep_prob=0.7, epochs=50, beta=0.001, sigma=0.1, batch_siz=32, conv1_output_depth=18, conv3_depth=360,conv4_depth=336` (the rest parameters are the same as LeNet model). We can see the model prefers more parameters in the depth of each layer. Higher depth is likely needed for capture keep information for various labels.
 	 
 	 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-	*	The convolution layer work well with the problem, because it allows recognize patterns at different location of the model. The l2 regularization and dropout layer helps with creating a successful model by allowing more flexibility and redudancy in the model, and eliminate the overfit problem.
+	*	The convolution layer work well with the problem, because it allows recognize patterns at various locations of images. The l2 regularization and dropout layer helps with creating a successful model by allowing more flexibility and redudancy in the model, and eliminate the overfit problem.
 
 If a well known architecture was chosen:
 
@@ -171,60 +170,60 @@ The model was able to correctly guess 5 of the 5 traffic signs, which gives an a
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is not very sure that this is a right-of-way sign (probability of 0.17), and the image does contain a right-of-way sign. The top five soft max probabilities were
+For the first image, the model predicts it is a right-of-way sign (probability of 0.15), and the image does contain a right-of-way sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
-| .17         			| Right of way   | 
-| .11     				| Beware of ice/snow|
-| .06					| Children crossing	|
-| .06	      			| Double curve|
-| .04				    | Slippery road |
+| .15         			| Right of way   | 
+| .07     				| Beware of ice/snow|
+| .06					| Double curve	|
+| .04	      			| Pedestrians|
+| .04				    | Roundabout mandatory |
 
 
-For the second image, the model is not very sure that this is a Speed limit (60km/h) sign (probability of 0.11), and the image does contain a Speed limit (60km/h) sign. The top five soft max probabilities were
+For the second image, the model predicts this is a Speed limit (60km/h) sign (probability of 0.21), and the image does contain a Speed limit (60km/h) sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
-| .11         			| Speed limit (60km/h)  | 
-| .10     				| Speed limit (50km/h) |
-| .10					| Wild animals crossing |
-| .07	      			| Speed limit (80km/h)|
-| .06				    | Speed limit (30km/h) |
+| .21         			| Speed limit (60km/h)  | 
+| .11     				| Speed limit (80km/h) |
+| .10					| Speed limit (50km/h) |
+| .03	      			| No vehicles|
+| .03				    | Slippery road |
 
-For the third image, the model is not very sure that this is a Stop sign (probability of 0.17), and the image does contain a Stop sign. The top five soft max probabilities were
+For the third image, the model predicts this is a Stop sign (probability of 0.12), and the image does contain a Stop sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
 | .12         			| Stop   | 
-| .06     				| No entry|
-| .06					| Priority road	|
-| .04	      			| Speed limit (20km/h)|
-| .04				    | Bicycles crossing |
+| .04     				| Yield|
+| .04					| Keep right	|
+| .04	      			| No entry |
+| .03				    | Speed limit (60km/h) |
 
-For the third image, the model is not very sure that this is a Road work sign (probability of 0.12), and the image does contain a Road work sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	  | 
-|:---------------------:|:---------------------------------------------:| 
-| .12         			| Road work   | 
-| .07     				| Traffic signals|
-| .04					| Bumpy road	|
-| .04	      			| Bicycles crossing|
-| .04				    | Turn left ahead |
-
-For the fifth image, the model is not very sure that this is a Children crossing sign (probability of 0.12), and the image does contain a Children crossing sign. The top five soft max probabilities were
+For the fourth image, the model predicts this is a Road work sign (probability of 0.13), and the image does contain a Road work sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
-| .12         			| Children crossing   | 
-| .07     				| Right-of-way at the next intersection|
-| .06					| Beware of ice/snow|
-| .05	      			| Bicycles crossing|
-| .05				    | Dangerous curve to the right |
+| .13         			| Road work   | 
+| .04     				| Bumpy road|
+| .04					| Keep left|
+| .03	      			| Dangerous curve to the right|
+| .03				    | Bicycles crossing |
+
+For the fifth image, the model predicts that this is a Children crossing sign (probability of 0.10), and the image does contain a Children crossing sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	  | 
+|:---------------------:|:---------------------------------------------:| 
+| .10         			| Children crossing   | 
+| .04     				| Slippery road|
+| .04					| Bicycles crossing|
+| .03	      			| Beware of ice/snow|
+| .03				    | Dangerous curve to the right |
 
 For the sixth image, the model could not tell this is a Children crossing sign at its top five soft max probabilities.
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 ####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
+Visualization of the first layer captures lines and edges of the images, and visualization of the second layer (not sure in the notebook) captures the patch pattern of the images.
 
