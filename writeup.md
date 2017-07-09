@@ -170,56 +170,56 @@ The model was able to correctly guess 5 of the 5 traffic signs, which gives an a
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model predicts it is a right-of-way sign (probability of 0.15), and the image does contain a right-of-way sign. The top five soft max probabilities were
+For the first image, the model predicts it is a Right-of-way sign (probability of 1.0000), and the image does contain a right-of-way sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
-| .15         			| Right of way   | 
-| .07     				| Beware of ice/snow|
-| .06					| Double curve	|
-| .04	      			| Pedestrians|
-| .04				    | Roundabout mandatory |
+| 1.0000         			| Right-of-way at the next intersection   | 
+| .0000     				| Beware of ice/snow|
+| .0000					| Pedestrians 	|
+| .0000	      			| Children crossing |
+| .0000				    | Double curve |
 
 
-For the second image, the model predicts this is a Speed limit (60km/h) sign (probability of 0.21), and the image does contain a Speed limit (60km/h) sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	  | 
-|:---------------------:|:---------------------------------------------:| 
-| .21         			| Speed limit (60km/h)  | 
-| .11     				| Speed limit (80km/h) |
-| .10					| Speed limit (50km/h) |
-| .03	      			| No vehicles|
-| .03				    | Slippery road |
-
-For the third image, the model predicts this is a Stop sign (probability of 0.12), and the image does contain a Stop sign. The top five soft max probabilities were
+For the second image, the model predicts this is a Speed limit (60km/h) sign (probability of 0.9999), and the image does contain a Speed limit (60km/h) sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
-| .12         			| Stop   | 
-| .04     				| Yield|
-| .04					| Keep right	|
-| .04	      			| No entry |
-| .03				    | Speed limit (60km/h) |
+| .9999         			| Speed limit (60km/h)  | 
+| .0001     				| Speed limit (80km/h) |
+| .0000				| Speed limit (50km/h) |
+| .0000	      			| End of all speed and passing limits|
+| .0000				    | Ahead only |
 
-For the fourth image, the model predicts this is a Road work sign (probability of 0.13), and the image does contain a Road work sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	  | 
-|:---------------------:|:---------------------------------------------:| 
-| .13         			| Road work   | 
-| .04     				| Bumpy road|
-| .04					| Keep left|
-| .03	      			| Dangerous curve to the right|
-| .03				    | Bicycles crossing |
-
-For the fifth image, the model predicts that this is a Children crossing sign (probability of 0.10), and the image does contain a Children crossing sign. The top five soft max probabilities were
+For the third image, the model predicts this is a Stop sign (probability of 0.5954), and the image does contain a Stop sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	  | 
 |:---------------------:|:---------------------------------------------:| 
-| .10         			| Children crossing   | 
-| .04     				| Slippery road|
-| .04					| Bicycles crossing|
-| .03	      			| Beware of ice/snow|
-| .03				    | Dangerous curve to the right |
+| .5954         			| Stop   | 
+| .3583     				| Speed limit (60km/h)|
+| .0087					| End of all speed and passing limits|
+| .0085	      			| Turn right ahead|
+| .0075				    | Traffic signals |
+
+For the fourth image, the model predicts this is a Road work sign (probability of 0.9994), and the image does contain a Road work sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	  | 
+|:---------------------:|:---------------------------------------------:| 
+| .9994         			| Road work   | 
+| .0003     				|  General caution|
+| .0001					| Keep left|
+| .0001	      			| Right-of-way at the next intersection|
+| .0000				    | Bicycles crossing |
+
+For the fifth image, the model predicts that this is a Children crossing sign (probability of 0.9835), and the image does contain a Children crossing sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	  | 
+|:---------------------:|:---------------------------------------------:| 
+| .9835         			| Children crossing   | 
+| .0078     				| Dangerous curve to the right|
+| .0039					| End of speed limit (80km/h)|
+| .0024	      			| Right-of-way at the next intersection|
+| .0009				    | Go straight or right|
 
 For the sixth image, the model could not tell this is a Children crossing sign at its top five soft max probabilities.
 
